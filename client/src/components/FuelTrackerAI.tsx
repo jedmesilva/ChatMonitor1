@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ArrowUp, Mic, Camera, FileText, MapPin, Fuel, Clock, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MessageBubble from './MessageBubble';
+import ExpandableDataSection from './ExpandableDataSection';
 import dashboardImage from '@assets/generated_images/Car_dashboard_display_29cbde75.png';
 
 export default function FuelTrackerAI() {
@@ -69,8 +70,13 @@ export default function FuelTrackerAI() {
   ]);
 
   const [message, setMessage] = useState('');
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [textareaHeight, setTextareaHeight] = useState(78);
+  const [selectedItems] = useState(3); // Mock selected items to show expandable section
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const isMessageEmpty = !message.trim();
 
@@ -78,9 +84,20 @@ export default function FuelTrackerAI() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const updateContainerHeight = useCallback(() => {
+    if (containerRef.current) {
+      const actualHeight = containerRef.current.offsetHeight;
+      setTextareaHeight(actualHeight);
+    }
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    updateContainerHeight();
+  }, [message, isExpanded, updateContainerHeight]);
 
   const handleSendMessage = () => {
     if (!message.trim()) return;
@@ -108,23 +125,51 @@ export default function FuelTrackerAI() {
     console.log(`${tool} clicked`);
   };
 
+  const toggleExpansion = useCallback(() => {
+    setIsExpanded(prev => !prev);
+  }, []);
+
   return (
-    <div className="flex flex-col h-screen bg-background" data-testid="fuel-tracker-main">
-      {/* Header */}
-      <header className="bg-card border-b border-border p-4 shadow-sm" data-testid="app-header">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-            <span className="text-lg font-bold text-primary-foreground">K</span>
+    <div className="min-h-screen bg-background flex items-end" data-testid="fuel-tracker-main">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+          }
+        `
+      }} />
+
+      {/* Header - Only show when section is not expanded */}
+      {!isExpanded && (
+        <header className="fixed top-0 left-0 right-0 z-40 bg-card border-b border-border p-4 shadow-sm" data-testid="app-header">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <span className="text-lg font-bold text-primary-foreground">K</span>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-card-foreground">Kmonitor</h1>
+              <p className="text-sm text-muted-foreground">Seu assistente de combustível</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-xl font-bold text-card-foreground">Kmonitor</h1>
-            <p className="text-sm text-muted-foreground">Seu assistente de combustível</p>
-          </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Messages Timeline */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-32" data-testid="messages-timeline">
+      <div 
+        className={`flex-1 overflow-y-auto p-4 space-y-4 w-full ${
+          !isExpanded ? 'pt-20' : 'pt-4'
+        }`}
+        style={{ 
+          paddingBottom: selectedItems > 0 ? 
+            (isExpanded ? `${textareaHeight + 55}px` : `${textareaHeight + 100}px`) : 
+            `${textareaHeight}px` 
+        }}
+        data-testid="messages-timeline"
+      >
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
@@ -132,8 +177,20 @@ export default function FuelTrackerAI() {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Expandable Data Section */}
+      <ExpandableDataSection
+        isVisible={selectedItems > 0}
+        isExpanded={isExpanded}
+        onToggleExpansion={toggleExpansion}
+        textareaHeight={textareaHeight}
+      />
+
       {/* Chat Input */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border rounded-t-3xl" data-testid="chat-input-container">
+      <div 
+        className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border rounded-t-3xl transition-all duration-300" 
+        ref={containerRef}
+        data-testid="chat-input-container"
+      >
         <div className="max-w-4xl mx-auto px-4 py-4">
           {/* Textarea */}
           <div className="mb-4">
@@ -142,7 +199,7 @@ export default function FuelTrackerAI() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Converse com Kmonitor..."
+              placeholder="Digite sua mensagem aqui..."
               className="w-full focus:outline-none focus:ring-0 text-card-foreground placeholder-muted-foreground text-base border-none bg-transparent resize-none min-h-[1.5rem] max-h-32 overflow-y-auto"
               rows={1}
               data-testid="input-message"
