@@ -221,7 +221,7 @@ export default function FuelTrackerAI() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyPress}
-              placeholder="Digite sua mensagem aqui..."
+              placeholder="Converse com Chatmonitor..."
               className="w-full focus:outline-none focus:ring-0 text-card-foreground placeholder-muted-foreground text-base border-none bg-transparent resize-none min-h-[1.5rem] max-h-32 overflow-y-auto"
               rows={1}
               data-testid="input-message"
