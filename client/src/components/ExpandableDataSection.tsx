@@ -392,7 +392,7 @@ export default function ExpandableDataSection({
               {renderCards()}
             </div>
 
-            <div className="px-4 pb-6">
+            <div className="px-4 pb-16">
               {/* Current Data */}
               <div className="space-y-6">
                 <div className="border-b border-border pb-4">
