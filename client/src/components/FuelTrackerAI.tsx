@@ -5,6 +5,24 @@ import MessageBubble from './MessageBubble';
 import ExpandableDataSection from './ExpandableDataSection';
 import dashboardImage from '@assets/generated_images/Car_dashboard_display_29cbde75.png';
 
+// Hook customizado para gerenciar o textarea
+const useTextareaAutoResize = (value: string) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      // Reset height to calculate new height
+      textarea.style.height = 'auto';
+      // Set new height based on scroll height
+      const newHeight = Math.min(textarea.scrollHeight, 128); // max-h-32 = 128px
+      textarea.style.height = `${newHeight}px`;
+    }
+  }, [value]);
+
+  return textareaRef;
+};
+
 export default function FuelTrackerAI() {
   // todo: remove mock functionality
   const [messages, setMessages] = useState([
@@ -75,7 +93,7 @@ export default function FuelTrackerAI() {
   const [selectedItems] = useState(3); // Mock selected items to show expandable section
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useTextareaAutoResize(message);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const isMessageEmpty = !message.trim();
