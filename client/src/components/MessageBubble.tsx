@@ -41,7 +41,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
   
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-6`} data-testid={`message-${message.id}`}>
-      <div className={`max-w-[85%] rounded-2xl p-5 shadow-sm border ${
+      <div className={`${isUser ? 'max-w-[85%]' : 'w-full'} rounded-2xl p-5 shadow-sm border ${
         isUser 
           ? 'bg-primary border-primary-border text-primary-foreground' 
           : 'bg-card border-card-border text-card-foreground'
