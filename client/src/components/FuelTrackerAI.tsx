@@ -234,9 +234,9 @@ export default function FuelTrackerAI() {
             <Button
               onClick={handleSendMessage}
               size="icon"
-              variant={isMessageEmpty ? 'ghost' : 'default'}
+              variant={isMessageEmpty ? 'secondary' : 'default'}
               disabled={isMessageEmpty}
-              className={`hover-elevate ${isMessageEmpty ? 'opacity-50' : ''}`}
+              className={`hover-elevate ${isMessageEmpty ? 'bg-gray-100 text-gray-500 opacity-50 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}`}
               data-testid="button-send-message"
             >
               <ArrowUp size={16} />
