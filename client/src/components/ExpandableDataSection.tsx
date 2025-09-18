@@ -217,6 +217,13 @@ export default function ExpandableDataSection({
     setShowVehicleSelector(false);
   }, []);
 
+  const handleAddNewVehicle = useCallback(() => {
+    setShowVehicleSelector(false);
+    console.log('Add new vehicle clicked');
+    // TODO: Implement add new vehicle functionality
+    // This could open a modal, navigate to a form, or trigger a different UI state
+  }, []);
+
   const toggleVehicleSelector = useCallback(() => {
     // Se a seção estiver recolhida, expandir automaticamente
     if (!isExpanded) {
@@ -362,6 +369,28 @@ export default function ExpandableDataSection({
                         </div>
                       </button>
                     ))}
+                    
+                    {/* Separator */}
+                    <div className="mx-4 my-2 h-px bg-border" />
+                    
+                    {/* Add New Vehicle Option */}
+                    <button
+                      onClick={handleAddNewVehicle}
+                      className="w-full px-4 py-3 text-left hover:bg-muted transition-colors duration-150 text-primary"
+                      data-testid="add-new-vehicle-option"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
+                        <div>
+                          <p className="font-medium text-primary text-sm">
+                            Adicionar novo veículo
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Cadastrar um novo veículo
+                          </p>
+                        </div>
+                      </div>
+                    </button>
                   </div>
                 )}
               </div>
