@@ -248,16 +248,19 @@ export default function FuelTrackerAI() {
               ))}
             </div>
 
-            <Button
+            <button 
               onClick={handleSendMessage}
-              size="icon"
-              variant={isMessageEmpty ? 'ghost' : 'default'}
+              className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${
+                isMessageEmpty 
+                  ? 'bg-gray-100 text-gray-500 opacity-50 cursor-not-allowed' 
+                  : 'bg-primary text-primary-foreground hover:bg-primary/90'
+              }`}
               disabled={isMessageEmpty}
-              className={`hover-elevate ${isMessageEmpty ? 'opacity-50' : ''}`}
+              aria-label="Enviar mensagem"
               data-testid="button-send-message"
             >
               <ArrowUp size={16} />
-            </Button>
+            </button>
           </div>
         </div>
       </div>
