@@ -51,13 +51,13 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           <div className="flex items-center space-x-3">
             {!isUser && (
               <div className="w-7 h-7 bg-primary rounded-xl flex items-center justify-center">
-                <span className="text-sm font-bold text-primary-foreground">K</span>
+                <span className="text-sm font-bold text-primary-foreground">C</span>
               </div>
             )}
             <span className={`text-xs font-medium ${
               isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'
             }`}>
-              {isUser ? 'Você' : 'Kmonitor'}
+              {isUser ? 'Você' : 'ChatMonitor'}
             </span>
           </div>
           <span className={`text-xs ${

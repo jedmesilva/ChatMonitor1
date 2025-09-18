@@ -1,8 +1,8 @@
-# Kmonitor - Fuel Monitoring Chat Application
+# ChatMonitor - Fuel Monitoring Chat Application
 
 ## Overview
 
-Kmonitor is a Portuguese-language fuel monitoring chat application that combines AI-powered conversational interfaces with data visualization to help users track and analyze their vehicle fuel consumption. The application features a chat-based interface where users can input fuel data through text or images, receive intelligent analysis, and view comprehensive fuel tracking insights through interactive cards and visualizations.
+ChatMonitor is a Portuguese-language fuel monitoring chat application that combines AI-powered conversational interfaces with data visualization to help users track and analyze their vehicle fuel consumption. The application features a chat-based interface where users can input fuel data through text or images, receive intelligent analysis, and view comprehensive fuel tracking insights through interactive cards and visualizations.
 
 ## User Preferences
 

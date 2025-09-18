@@ -170,10 +170,10 @@ export default function FuelTrackerAI() {
         <header className="fixed top-0 left-0 right-0 z-40 bg-card border-b border-border p-4 shadow-sm" data-testid="app-header">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <span className="text-lg font-bold text-primary-foreground">K</span>
+              <span className="text-lg font-bold text-primary-foreground">C</span>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-card-foreground">Kmonitor</h1>
+              <h1 className="text-xl font-bold text-card-foreground">ChatMonitor</h1>
               <p className="text-sm text-muted-foreground">Seu assistente de combustível</p>
             </div>
           </div>
