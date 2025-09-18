@@ -442,7 +442,7 @@ export default function ExpandableDataSection({
               <div className="space-y-6">
                 <div className="border-b border-border pb-4">
                   <h3 className="text-xl font-semibold text-card-foreground">Dados do Veículo</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Informações atualizadas do seu carro</p>
+                  <p className="text-sm text-muted-foreground mt-1">Informações atualizadas do seu veículo</p>
                 </div>
 
                 <div className="space-y-4">
