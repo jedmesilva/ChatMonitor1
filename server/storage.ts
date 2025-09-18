@@ -20,11 +20,15 @@ export interface IStorage {
   getVehiclesByUserId(userId: string): Promise<Vehicle[]>;
   getVehicle(id: string): Promise<Vehicle | undefined>;
   createVehicle(vehicle: InsertVehicle): Promise<Vehicle>;
+  updateVehicle(id: string, data: Partial<InsertVehicle>): Promise<Vehicle>;
+  deleteVehicle(id: string): Promise<void>;
   
   // Fuel record methods
   getFuelRecordsByVehicleId(vehicleId: string): Promise<FuelRecord[]>;
   getFuelRecord(id: string): Promise<FuelRecord | undefined>;
   createFuelRecord(record: InsertFuelRecord): Promise<FuelRecord>;
+  updateFuelRecord(id: string, data: Partial<Omit<InsertFuelRecord, 'vehicleId'>>): Promise<FuelRecord>;
+  deleteFuelRecord(id: string): Promise<void>;
   
   // Chat message methods
   getChatMessagesByUserId(userId: string, limit?: number): Promise<ChatMessage[]>;
@@ -78,10 +82,43 @@ export class MemStorage implements IStorage {
     const vehicle: Vehicle = { 
       ...insertVehicle, 
       id,
+      brand: insertVehicle.brand || null,
+      model: insertVehicle.model || null,
+      year: insertVehicle.year || null,
       createdAt: new Date()
     };
     this.vehicles.set(id, vehicle);
     return vehicle;
+  }
+
+  async updateVehicle(id: string, data: Partial<InsertVehicle>): Promise<Vehicle> {
+    const existing = this.vehicles.get(id);
+    if (!existing) {
+      throw new Error('Vehicle not found');
+    }
+
+    const updated: Vehicle = {
+      ...existing,
+      ...data,
+      brand: data.brand !== undefined ? (data.brand || null) : existing.brand,
+      model: data.model !== undefined ? (data.model || null) : existing.model,
+      year: data.year !== undefined ? (data.year || null) : existing.year,
+      id, // preserve ID
+      createdAt: existing.createdAt // preserve creation date
+    };
+    
+    this.vehicles.set(id, updated);
+    return updated;
+  }
+
+  async deleteVehicle(id: string): Promise<void> {
+    // Also delete all fuel records for this vehicle
+    const fuelRecords = await this.getFuelRecordsByVehicleId(id);
+    for (const record of fuelRecords) {
+      this.fuelRecords.delete(record.id);
+    }
+    
+    this.vehicles.delete(id);
   }
 
   // Fuel record methods
@@ -100,10 +137,36 @@ export class MemStorage implements IStorage {
     const record: FuelRecord = { 
       ...insertRecord, 
       id,
+      stationName: insertRecord.stationName || null,
+      odometer: insertRecord.odometer || null,
       createdAt: new Date()
     };
     this.fuelRecords.set(id, record);
     return record;
+  }
+
+  async updateFuelRecord(id: string, data: Partial<Omit<InsertFuelRecord, 'vehicleId'>>): Promise<FuelRecord> {
+    const existing = this.fuelRecords.get(id);
+    if (!existing) {
+      throw new Error('Fuel record not found');
+    }
+
+    const updated: FuelRecord = {
+      ...existing,
+      ...data,
+      stationName: data.stationName !== undefined ? (data.stationName || null) : existing.stationName,
+      odometer: data.odometer !== undefined ? (data.odometer || null) : existing.odometer,
+      id, // preserve ID
+      vehicleId: existing.vehicleId, // preserve vehicle ID
+      createdAt: existing.createdAt // preserve creation date
+    };
+    
+    this.fuelRecords.set(id, updated);
+    return updated;
+  }
+
+  async deleteFuelRecord(id: string): Promise<void> {
+    this.fuelRecords.delete(id);
   }
 
   // Chat message methods
@@ -119,6 +182,7 @@ export class MemStorage implements IStorage {
     const message: ChatMessage = { 
       ...insertMessage, 
       id,
+      metadata: insertMessage.metadata || null,
       createdAt: new Date()
     };
     this.chatMessages.set(id, message);
