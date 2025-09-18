@@ -371,26 +371,42 @@ export default function ExpandableDataSection({
                     ))}
                     
                     {/* Separator */}
-                    <div className="mx-4 my-2 h-px bg-border" />
+                    <div className="mx-4 my-3 h-px bg-border" />
                     
-                    {/* Add New Vehicle Option */}
-                    <button
-                      onClick={handleAddNewVehicle}
-                      className="w-full px-4 py-3 text-left hover:bg-muted transition-colors duration-150 text-primary"
-                      data-testid="add-new-vehicle-option"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-2 h-2 rounded-full bg-primary flex-shrink-0" />
-                        <div>
-                          <p className="font-medium text-primary text-sm">
-                            Adicionar novo veículo
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Cadastrar um novo veículo
-                          </p>
+                    {/* Add New Vehicle Option - Elegant Design */}
+                    <div className="px-4 pb-2">
+                      <button
+                        onClick={handleAddNewVehicle}
+                        className="w-full border-2 border-dashed border-primary/30 hover:border-primary/50 bg-primary/5 hover:bg-primary/10 rounded-xl p-6 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-30"
+                        data-testid="add-new-vehicle-option"
+                      >
+                        <div className="flex flex-col items-center text-center gap-3">
+                          <div className="w-10 h-10 rounded-full bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center transition-colors duration-200">
+                            <svg 
+                              className="w-5 h-5 text-primary" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                strokeWidth={2} 
+                                d="M12 4v16m8-8H4" 
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <p className="font-semibold text-primary text-sm mb-1">
+                              Novo veículo
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Cadastrar novo veículo
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </button>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
