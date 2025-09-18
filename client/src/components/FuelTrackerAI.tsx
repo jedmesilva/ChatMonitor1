@@ -236,16 +236,15 @@ export default function FuelTrackerAI() {
                 { icon: Camera, label: 'Tirar foto' },
                 { icon: FileText, label: 'Anexar arquivo' }
               ].map(({ icon: Icon, label }, index) => (
-                <Button
+                <button
                   key={index}
-                  variant="secondary"
-                  size="icon"
                   onClick={() => handleToolClick(label.toLowerCase())}
-                  className="hover-elevate bg-gray-100 hover:bg-gray-200 text-gray-500"
+                  className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  aria-label={label}
                   data-testid={`button-${label.toLowerCase().replace(' ', '-')}`}
                 >
                   <Icon size={16} />
-                </Button>
+                </button>
               ))}
             </div>
 
