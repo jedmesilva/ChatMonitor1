@@ -115,9 +115,13 @@ export default function FuelTrackerAI() {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        // Shift+Enter envia mensagem
+        e.preventDefault();
+        handleSendMessage();
+      }
+      // Enter normal permite quebra de linha
     }
   };
 
