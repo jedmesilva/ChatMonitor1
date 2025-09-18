@@ -220,10 +220,10 @@ export default function FuelTrackerAI() {
               ].map(({ icon: Icon, label }, index) => (
                 <Button
                   key={index}
-                  variant="ghost"
+                  variant="secondary"
                   size="icon"
                   onClick={() => handleToolClick(label.toLowerCase())}
-                  className="hover-elevate"
+                  className="hover-elevate bg-gray-100 hover:bg-gray-200 text-gray-500"
                   data-testid={`button-${label.toLowerCase().replace(' ', '-')}`}
                 >
                   <Icon size={16} />
