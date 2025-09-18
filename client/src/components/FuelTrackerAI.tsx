@@ -380,199 +380,197 @@ export default function ChatInputComponent() {
         }
       `}</style>
       {/* Selection Sheet */}
-      {selectedItems > 0 && (
-        <div 
-          className={`fixed left-0 right-0 bottom-0 z-30 transition-all duration-300 ${
-            isExpanded ? 'top-0 bg-white rounded-none' : 'bg-gray-800 rounded-t-3xl'
-          }`}
-          style={{ paddingBottom: `${textareaHeight}px` }}
-        >
-          {/* Header */}
-          <div className={`bg-gray-800 text-white ${isExpanded ? 'rounded-none' : 'rounded-t-3xl'}`}>
-            <div className="max-w-4xl mx-auto px-4 py-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-medium">Monitor</span>
+      <div 
+        className={`fixed left-0 right-0 bottom-0 z-30 transition-all duration-300 ${
+          isExpanded ? 'top-0 bg-white rounded-none' : 'bg-gray-800 rounded-t-3xl'
+        }`}
+        style={{ paddingBottom: `${textareaHeight}px` }}
+      >
+        {/* Header */}
+        <div className={`bg-gray-800 text-white ${isExpanded ? 'rounded-none' : 'rounded-t-3xl'}`}>
+          <div className="max-w-4xl mx-auto px-4 py-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium">Monitor</span>
 
-                  {/* Vehicle Selector */}
-                  <div className="relative">
-                    <button
-                      onClick={toggleVehicleSelector}
-                      className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-xs transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30"
-                      aria-label="Selecionar veículo"
-                    >
-                      <span className="font-medium">{currentVehicle.name}</span>
-                      <span className="text-gray-300">{currentVehicle.plate}</span>
-                      <ChevronRight 
-                        size={12} 
-                        className={`transition-transform duration-200 ${showVehicleSelector ? 'rotate-90' : ''}`}
-                      />
-                    </button>
+                {/* Vehicle Selector */}
+                <div className="relative">
+                  <button
+                    onClick={toggleVehicleSelector}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded-lg text-xs transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30"
+                    aria-label="Selecionar veículo"
+                  >
+                    <span className="font-medium">{currentVehicle.name}</span>
+                    <span className="text-gray-300">{currentVehicle.plate}</span>
+                    <ChevronRight 
+                      size={12} 
+                      className={`transition-transform duration-200 ${showVehicleSelector ? 'rotate-90' : ''}`}
+                    />
+                  </button>
 
-                    {/* Vehicle Dropdown */}
-                    {showVehicleSelector && (
-                      <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-40">
-                        {vehicles.map((vehicle, index) => (
-                          <button
-                            key={vehicle.id}
-                            onClick={() => handleVehicleChange(index)}
-                            className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-150 ${
-                              index === selectedVehicle ? 'bg-blue-50 border-r-2 border-blue-500' : ''
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <p className="font-medium text-gray-900 text-sm">
-                                  {vehicle.name} {vehicle.year}
-                                </p>
-                                <p className="text-xs text-gray-500">
-                                  {vehicle.plate} • {vehicle.color}
-                                </p>
-                              </div>
-                              <div className="text-right">
-                                <p className="text-sm font-medium text-gray-900">{vehicle.odometer}</p>
-                                <p className="text-xs text-gray-500">KM atual</p>
-                              </div>
+                  {/* Vehicle Dropdown */}
+                  {showVehicleSelector && (
+                    <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-40">
+                      {vehicles.map((vehicle, index) => (
+                        <button
+                          key={vehicle.id}
+                          onClick={() => handleVehicleChange(index)}
+                          className={`w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-150 ${
+                            index === selectedVehicle ? 'bg-blue-50 border-r-2 border-blue-500' : ''
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="font-medium text-gray-900 text-sm">
+                                {vehicle.name} {vehicle.year}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {vehicle.plate} • {vehicle.color}
+                              </p>
                             </div>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                            <div className="text-right">
+                              <p className="text-sm font-medium text-gray-900">{vehicle.odometer}</p>
+                              <p className="text-xs text-gray-500">KM atual</p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-
-                <button 
-                  onClick={toggleExpansion}
-                  className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-                  aria-label={isExpanded ? 'Recolher painel' : 'Expandir painel'}
-                >
-                  {isExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
-                </button>
               </div>
+
+              <button 
+                onClick={toggleExpansion}
+                className="w-8 h-8 rounded-full bg-gray-700 hover:bg-gray-600 flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                aria-label={isExpanded ? 'Recolher painel' : 'Expandir painel'}
+              >
+                {isExpanded ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
+              </button>
             </div>
           </div>
+        </div>
 
-          {/* Expanded Content */}
-          {isExpanded && (
-            <div 
-              className="flex-1 overflow-y-auto bg-white" 
-              style={{ height: `calc(100vh - ${textareaHeight}px - 55px)` }}
-            >
-              <div className="max-w-4xl mx-auto">
-                <div className="px-4 pt-6">
-                  {renderCards()}
-                </div>
+        {/* Expanded Content */}
+        {isExpanded && (
+          <div 
+            className="flex-1 overflow-y-auto bg-white" 
+            style={{ height: `calc(100vh - ${textareaHeight}px - 55px)` }}
+          >
+            <div className="max-w-4xl mx-auto">
+              <div className="px-4 pt-6">
+                {renderCards()}
+              </div>
 
-                <div className="px-4 pb-6">
-                  {/* Current Data */}
-                  <div className="space-y-6">
-                    <div className="border-b border-gray-100 pb-4">
-                      <h3 className="text-xl font-semibold text-gray-900">Dados do Veículo</h3>
-                      <p className="text-sm text-gray-500 mt-1">Informações atualizadas do seu carro</p>
+              <div className="px-4 pb-6">
+                {/* Current Data */}
+                <div className="space-y-6">
+                  <div className="border-b border-gray-100 pb-4">
+                    <h3 className="text-xl font-semibold text-gray-900">Dados do Veículo</h3>
+                    <p className="text-sm text-gray-500 mt-1">Informações atualizadas do seu carro</p>
+                  </div>
+
+                <div className="space-y-4">
+                  {/* Odometer - Destaque Principal */}
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="bg-blue-500 rounded-xl p-3">
+                          <OdometerIcon size={24} className="text-white" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-semibold text-gray-900">Quilometragem</h4>
+                          <p className="text-sm text-gray-500">Odômetro total do veículo</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-3xl font-bold text-gray-900">{vehicleData.odometer}</span>
+                      </div>
                     </div>
+                  </div>
 
-                  <div className="space-y-4">
-                    {/* Odometer - Destaque Principal */}
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="bg-blue-500 rounded-xl p-3">
-                            <OdometerIcon size={24} className="text-white" />
+                  {/* Secondary Data Grid */}
+                  <div className="grid gap-4">
+                    {/* Last Fuel */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-gray-100 rounded-lg p-2">
+                            <FuelPumpIcon size={20} className="text-gray-600" />
                           </div>
                           <div>
-                            <h4 className="text-lg font-semibold text-gray-900">Quilometragem</h4>
-                            <p className="text-sm text-gray-500">Odômetro total do veículo</p>
+                            <h4 className="text-base font-medium text-gray-900">Último Abastecimento</h4>
+                            <p className="text-xs text-gray-500">{vehicleData.lastFuel.type}</p>
+                          </div>
+                        </div>
+                        <span className="text-xl font-bold text-gray-900">{vehicleData.lastFuel.amount}</span>
+                      </div>
+                      <div className="ml-11 pt-3 border-t border-gray-100">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-gray-500">{vehicleData.lastFuel.date}</span>
+                          <span className="text-gray-700 font-medium">
+                            {vehicleData.lastFuel.pricePerLiter} • {vehicleData.lastFuel.totalPrice}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tank Level */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-gray-100 rounded-lg p-2">
+                            <FuelTankIcon size={20} className="text-gray-600" level={vehicleData.tankLevel.percentage / 100} />
+                          </div>
+                          <div>
+                            <h4 className="text-base font-medium text-gray-900">Nível do Tanque</h4>
+                            <p className="text-xs text-gray-500">Combustível restante</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <span className="text-3xl font-bold text-gray-900">{vehicleData.odometer}</span>
+                          <span className="text-xl font-bold text-gray-900">{vehicleData.tankLevel.percentage}%</span>
+                          <p className="text-xs text-gray-500">{vehicleData.tankLevel.remaining}</p>
+                        </div>
+                      </div>
+                      <div className="ml-11 pt-3 border-t border-gray-100">
+                        <div className="flex justify-between items-center text-xs">
+                          <span className="text-gray-500">Autonomia estimada</span>
+                          <div className="text-right">
+                            <span className="text-sm font-medium text-gray-700">{vehicleData.tankLevel.autonomy}</span>
+                            <p className="text-gray-500">{vehicleData.tankLevel.efficiency}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* Secondary Data Grid */}
-                    <div className="grid gap-4">
-                      {/* Last Fuel */}
-                      <div className="bg-white border border-gray-200 rounded-xl p-5">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="bg-gray-100 rounded-lg p-2">
-                              <FuelPumpIcon size={20} className="text-gray-600" />
-                            </div>
-                            <div>
-                              <h4 className="text-base font-medium text-gray-900">Último Abastecimento</h4>
-                              <p className="text-xs text-gray-500">{vehicleData.lastFuel.type}</p>
-                            </div>
+                    {/* Average Consumption */}
+                    <div className="bg-white border border-gray-200 rounded-xl p-5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-gray-100 rounded-lg p-2">
+                            <Activity size={20} className="text-gray-600" />
                           </div>
-                          <span className="text-xl font-bold text-gray-900">{vehicleData.lastFuel.amount}</span>
-                        </div>
-                        <div className="ml-11 pt-3 border-t border-gray-100">
-                          <div className="flex justify-between items-center text-xs">
-                            <span className="text-gray-500">{vehicleData.lastFuel.date}</span>
-                            <span className="text-gray-700 font-medium">
-                              {vehicleData.lastFuel.pricePerLiter} • {vehicleData.lastFuel.totalPrice}
-                            </span>
+                          <div>
+                            <h4 className="text-base font-medium text-gray-900">Consumo Médio</h4>
+                            <p className="text-xs text-gray-500">{vehicleData.avgConsumption.period}</p>
                           </div>
                         </div>
-                      </div>
-
-                      {/* Tank Level */}
-                      <div className="bg-white border border-gray-200 rounded-xl p-5">
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <div className="bg-gray-100 rounded-lg p-2">
-                              <FuelTankIcon size={20} className="text-gray-600" level={vehicleData.tankLevel.percentage / 100} />
-                            </div>
-                            <div>
-                              <h4 className="text-base font-medium text-gray-900">Nível do Tanque</h4>
-                              <p className="text-xs text-gray-500">Combustível restante</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xl font-bold text-gray-900">{vehicleData.tankLevel.percentage}%</span>
-                            <p className="text-xs text-gray-500">{vehicleData.tankLevel.remaining}</p>
-                          </div>
-                        </div>
-                        <div className="ml-11 pt-3 border-t border-gray-100">
-                          <div className="flex justify-between items-center text-xs">
-                            <span className="text-gray-500">Autonomia estimada</span>
-                            <div className="text-right">
-                              <span className="text-sm font-medium text-gray-700">{vehicleData.tankLevel.autonomy}</span>
-                              <p className="text-gray-500">{vehicleData.tankLevel.efficiency}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Average Consumption */}
-                      <div className="bg-white border border-gray-200 rounded-xl p-5">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="bg-gray-100 rounded-lg p-2">
-                              <Activity size={20} className="text-gray-600" />
-                            </div>
-                            <div>
-                              <h4 className="text-base font-medium text-gray-900">Consumo Médio</h4>
-                              <p className="text-xs text-gray-500">{vehicleData.avgConsumption.period}</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-xl font-bold text-gray-900">{vehicleData.avgConsumption.value}</span>
-                            <p className="text-xs text-green-600 font-medium">{vehicleData.avgConsumption.change}</p>
-                          </div>
+                        <div className="text-right">
+                          <span className="text-xl font-bold text-gray-900">{vehicleData.avgConsumption.value}</span>
+                          <p className="text-xs text-green-600 font-medium">{vehicleData.avgConsumption.change}</p>
                         </div>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {renderAlerts()}
-                  </div>
+                {renderAlerts()}
                 </div>
               </div>
             </div>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       {/* Chat Input */}
       <div 
@@ -604,8 +602,8 @@ export default function ChatInputComponent() {
               ].map(({ icon: Icon, label }, index) => (
                 <button
                   key={index}
-                  onClick={() => handleToolClick(label.toLowerCase())}
                   className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 active:scale-95 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                  onClick={() => handleToolClick(label.toLowerCase())}
                   aria-label={label}
                 >
                   <Icon size={16} />
