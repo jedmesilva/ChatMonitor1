@@ -218,8 +218,12 @@ export default function ExpandableDataSection({
   }, []);
 
   const toggleVehicleSelector = useCallback(() => {
+    // Se a seção estiver recolhida, expandir automaticamente
+    if (!isExpanded) {
+      onToggleExpansion();
+    }
     setShowVehicleSelector(prev => !prev);
-  }, []);
+  }, [isExpanded, onToggleExpansion]);
 
   const renderCards = useCallback(() => (
     <div className="mb-6">
