@@ -47,7 +47,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
           : 'bg-card border-card-border text-card-foreground'
       }`}>
         {/* Header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 gap-4">
           <div className="flex items-center space-x-3">
             {!isUser && (
               <div className="w-7 h-7 bg-primary rounded-xl flex items-center justify-center">
@@ -60,7 +60,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
               {isUser ? 'Você' : 'ChatMonitor'}
             </span>
           </div>
-          <span className={`text-xs ${
+          <span className={`text-xs flex-shrink-0 ${
             isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'
           }`}>
             {message.timestamp}
