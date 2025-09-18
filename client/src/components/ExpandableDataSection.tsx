@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { ChevronUp, ChevronDown, ChevronRight, Activity } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { OdometerIcon, FuelPumpIcon, FuelTankIcon } from './icons/CustomIcons';
@@ -53,6 +53,24 @@ export default function ExpandableDataSection({
 }: ExpandableDataSectionProps) {
   const [selectedVehicle, setSelectedVehicle] = useState(0);
   const [showVehicleSelector, setShowVehicleSelector] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Fechar dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowVehicleSelector(false);
+      }
+    };
+
+    if (showVehicleSelector) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showVehicleSelector]);
 
   // todo: remove mock functionality - replace with real data from API
   const vehicles: Vehicle[] = useMemo(() => [
@@ -185,7 +203,7 @@ export default function ExpandableDataSection({
       id: 'tanque',
       title: 'Nível do Tanque',
       description: 'Atualizar combustível restante',
-      icon: <FuelTankIcon size={20} className="text-muted-foreground" level={0.4} />,
+      icon: <FuelTankIcon size={20} className="text-muted-foreground" />,
     }
   ], []);
 
@@ -209,7 +227,7 @@ export default function ExpandableDataSection({
         <h3 className="text-base font-medium text-card-foreground mb-1">Ações Rápidas</h3>
         <p className="text-sm text-muted-foreground">Registre novos dados do seu veículo</p>
       </div>
-      
+
       <div className="overflow-x-auto scrollbar-hide -mx-4">
         <div className="flex gap-4 px-4 py-2" style={{ width: 'max-content' }}>
           {cardData.map((card) => (
@@ -234,7 +252,7 @@ export default function ExpandableDataSection({
   const renderAlerts = useCallback(() => (
     <div className="mt-8 space-y-3">
       <h4 className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Notificações</h4>
-      
+
       {currentVehicle.alerts.map((alert, index) => {
         const colorClasses = {
           amber: {
@@ -252,10 +270,10 @@ export default function ExpandableDataSection({
             text: 'text-muted-foreground'
           }
         };
-        
+
         const colors = colorClasses[alert.color];
         const isPriority = alert.priority === 'high';
-        
+
         return (
           <div 
             key={index} 
@@ -296,9 +314,9 @@ export default function ExpandableDataSection({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium">Monitor</span>
-              
+
               {/* Vehicle Selector */}
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={toggleVehicleSelector}
                   className="flex items-center gap-2 px-3 py-1.5 bg-primary-foreground/10 hover:bg-primary-foreground/20 rounded-lg text-xs transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-foreground focus:ring-opacity-30"
@@ -344,7 +362,7 @@ export default function ExpandableDataSection({
                 )}
               </div>
             </div>
-            
+
             <Button 
               onClick={onToggleExpansion}
               variant="ghost"
@@ -357,7 +375,7 @@ export default function ExpandableDataSection({
           </div>
         </div>
       </div>
-      
+
       {/* Expanded Content */}
       {isExpanded && (
         <div 
@@ -377,7 +395,7 @@ export default function ExpandableDataSection({
                   <h3 className="text-xl font-semibold text-card-foreground">Dados do Veículo</h3>
                   <p className="text-sm text-muted-foreground mt-1">Informações atualizadas do seu carro</p>
                 </div>
-              
+
                 <div className="space-y-4">
                   {/* Odometer - Primary Highlight */}
                   <div className="bg-card border border-card-border rounded-2xl p-6 shadow-sm" data-testid="odometer-card">
